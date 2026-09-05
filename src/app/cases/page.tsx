@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { AppShell } from "@/components/AppShell";
@@ -10,7 +10,7 @@ import { Search } from "lucide-react";
 
 const STATUSES = ["", "PENDING", "PROCESSING", "AWAITING_DECISION", "CLEARED", "SECONDARY_INSPECTION", "REJECTED", "REFERRED"];
 
-export default function CasesPage() {
+function CasesTable() {
   const searchParams = useSearchParams();
   const [cases, setCases] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
@@ -108,5 +108,12 @@ export default function CasesPage() {
         </div>
       </div>
     </AppShell>
+  );
+}
+export default function CasesPage() {
+  return (
+    <Suspense>
+      <CasesTable />
+    </Suspense>
   );
 }
